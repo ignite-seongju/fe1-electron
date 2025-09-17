@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FE팀 도구</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🛠️ FE팀 도구</h1>
+            <p class="subtitle">팀 개발을 위한 유용한 도구들</p>
+        </header>
+
+        <!-- 네비게이션 바 -->
+        <nav id="navigation" class="navigation hidden">
+            <button id="back-button" class="nav-button">
+                ← 뒤로가기
+            </button>
+            <button id="home-button" class="nav-button">
+                🏠 홈으로가기
+            </button>
+        </nav>
+
+        <!-- 메인 애플리케이션 화면 -->
+        <main id="home-page" class="main-content">
+            <div class="app-layout">
+                <!-- 왼쪽: 기능 선택 패널 -->
+                <div class="left-panel">
+                    <!-- Jira 티켓 동기화 -->
+                    <div class="card">
+                        <h2>🔄 Jira 티켓 동기화</h2>
+                        <p>동기화할 Jira 프로젝트를 선택해주세요.</p>
+                        
+                        <!-- 사용자 선택 -->
+                        <div class="user-selection">
+                            <label for="user-select" class="select-label">현재 사용자를 선택해주세요</label>
+                            <select id="user-select" class="user-dropdown">
+                                <option value="">사용자를 선택하세요</option>
+                                <option value="김가빈">김가빈</option>
+                                <option value="손현지">손현지</option>
+                                <option value="박성찬">박성찬</option>
+                                <option value="서성주">서성주</option>
+                                <option value="조한빈">조한빈</option>
+                                <option value="한준호">한준호</option>
+                                <option value="김찬영">김찬영</option>
+                                <option value="이미진">이미진</option>
+                            </select>
+                        </div>
+                        
+                        <div class="button-section">
+                            <button id="fehg-kq-button" class="sync-button">
+                                📋 FEHG → KQ
+                            </button>
+                            <button id="fehg-hb-button" class="sync-button">
+                                📋 FEHG → HB
+                            </button>
+                            <button id="fehg-autoway-button" class="sync-button">
+                                📋 FEHG → AUTOWAY(HMG)
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 슬랙 템플릿 선택 -->
+                    <div class="card">
+                        <h2>💬 슬랙 템플릿 선택</h2>
+                        <p>사용할 슬랙 템플릿을 선택해주세요.</p>
+                        
+                        <div class="button-section">
+                            <button id="cpo-bo-button" class="template-button">
+                                🏢 CPO BO
+                            </button>
+                            <button id="softeer-button" class="template-button">
+                                🚗 소프티어
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 오른쪽: 결과 화면 -->
+                <div class="right-panel">
+                    <div class="card result-card">
+                        <h2>📋 결과</h2>
+                        <div id="result-area" class="result-display">
+                            <div class="empty-state">
+                                <div class="empty-icon">📄</div>
+                                <p>여기에 결과가 표시됩니다.</p>
+                            </div>
+                            <div id="result-content" class="result-content hidden"></div>
+                            <div id="result-actions" class="result-actions hidden">
+                                <button id="copy-button" class="copy-button">
+                                    📋 복사하기
+                                </button>
+                                <button id="sync-button" class="sync-execute-button hidden">
+                                    🚀 동기화 실행
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="renderer.js"></script>
+</body>
+</html>
