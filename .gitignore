@@ -103,3 +103,5 @@ temp/
 # Electron specific
 app/dist/
 app/release/
+
+*/constants-ignore.ts
