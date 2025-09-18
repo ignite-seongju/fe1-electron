@@ -19,7 +19,7 @@ npm install
 
 ### 3. 환경 설정 (중요!)
 
-프로젝트 루트에 `env.ts` 파일을 생성하고 다음 내용을 입력하세요:
+`src/utils/env.ts` 파일을 생성하고 다음 내용을 입력하세요:
 
 ```typescript
 export const IGNORE_API_TOKENS = {
@@ -39,13 +39,13 @@ export const IGNORE_API_TOKENS = {
 1. [Atlassian 계정 설정](https://id.atlassian.com/manage-profile/security/api-tokens) 접속
 2. "API 토큰 생성" 클릭
 3. 토큰 이름 입력 후 생성
-4. 생성된 토큰을 `env.ts`에 입력
+4. 생성된 토큰을 `src/utils/env.ts`에 입력
 
 #### HMG_JIRA_TOKEN
 
 1. HMG Jira 개인 설정 페이지 접속
 2. API 토큰 생성
-3. 생성된 토큰을 `env.ts`에 입력
+3. 생성된 토큰을 `src/utils/env.ts`에 입력
 
 ### 5. 개발 모드 실행
 
@@ -91,7 +91,8 @@ fe1-electron/
 │   ├── index.html         # 메인 HTML
 │   ├── styles.css         # 스타일시트
 │   └── renderer.js        # 렌더러 스크립트
-├── env.ts                 # 환경 변수 (직접 생성)
+│   └── utils/             # 유틸리티 함수들
+│       └── env.ts         # 환경 변수 (직접 생성)
 └── package.json           # 프로젝트 설정
 ```
 
@@ -117,7 +118,7 @@ fe1-electron/
 ### "Jira API 연결 실패"
 
 - 해결: 인터넷 연결 및 VPN 연결 확인
-- `env.ts` 파일의 API 토큰이 올바른지 확인
+- `src/utils/env.ts` 파일의 API 토큰이 올바른지 확인
 
 ### "연결된 티켓이 없습니다"
 
@@ -141,7 +142,7 @@ npm run dev
 
 ## ⚠️ 중요 사항
 
-- **env.ts 파일 보안**: API 토큰이 포함된 파일이므로 Git에 커밋하지 마세요
+- **src/utils/env.ts 파일 보안**: API 토큰이 포함된 파일이므로 Git에 커밋하지 마세요
 - **Blocks 관계**: 동기화할 티켓들은 반드시 "Blocks" 관계로 연결되어 있어야 합니다
 - **권한 필요**: 대상 프로젝트 티켓에 대한 편집 권한이 필요합니다
 - **VPN 연결**: HMG Jira 접근 시 회사 VPN 연결 필요
