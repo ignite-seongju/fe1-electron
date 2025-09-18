@@ -405,7 +405,6 @@ async function showFehgAutowayEpicCreation() {
 
 // AUTOWAY 에픽 생성 실행 함수
 async function executeAutowayEpicCreation(epicIdNum) {
-
   // 에픽 생성 진행 중 상태 설정
   setAppDisabled(true)
 
@@ -418,7 +417,8 @@ async function executeAutowayEpicCreation(epicIdNum) {
   const resultActions = document.getElementById('result-actions')
 
   // 진행 중 메시지 표시
-  resultContent.innerHTML = '<div class="loading-message">📋 FEHG → HMG(AUTOWAY) 에픽 생성 진행 중입니다...</div>'
+  resultContent.innerHTML =
+    '<div class="loading-message">📋 FEHG → HMG(AUTOWAY) 에픽 생성 진행 중입니다...</div>'
   resultContent.classList.remove('hidden')
 
   // 결과 화면 표시 설정
@@ -794,12 +794,12 @@ async function showEpicSelectionModal(title, description, onConfirm) {
     const result = await window.electronAPI.getAllowedFehgEpics()
     if (result.success) {
       epicData = result.epics
-      
+
       // 드롭다운 초기화
       dropdown.innerHTML = '<option value="">에픽을 선택하세요...</option>'
-      
+
       // 에픽 옵션 추가
-      epicData.forEach(epic => {
+      epicData.forEach((epic) => {
         const option = document.createElement('option')
         option.value = epic.id
         option.textContent = `FEHG-${epic.id}: ${epic.summary}`
@@ -846,16 +846,17 @@ async function showEpicSelectionModal(title, description, onConfirm) {
 
       modal.classList.add('hidden')
       cleanup()
-      
+
       // 진행 중 메시지 표시
       const resultContent = document.getElementById('result-content')
       const emptyState = document.querySelector('.empty-state')
       if (resultContent && emptyState) {
         emptyState.classList.add('hidden')
-        resultContent.innerHTML = '<div class="loading-message">📋 작업 진행 중입니다...</div>'
+        resultContent.innerHTML =
+          '<div class="loading-message">📋 작업 진행 중입니다...</div>'
         resultContent.classList.remove('hidden')
       }
-      
+
       if (onConfirm) {
         await onConfirm(parseInt(selectedEpicId))
       }
@@ -924,7 +925,9 @@ FEHG-${epicIdNum}
       // 화이트리스트 오류 처리
       if (result.error === 'WHITELIST_ERROR') {
         const allowedIds = result.allowedEpicIds.join(', ')
-        throw new Error(`${result.message}\n\n허용된 에픽 ID 목록:\n${allowedIds}`)
+        throw new Error(
+          `${result.message}\n\n허용된 에픽 ID 목록:\n${allowedIds}`
+        )
       }
       throw new Error(result.message)
     }
@@ -1198,11 +1201,15 @@ document.addEventListener('DOMContentLoaded', () => {
   // 모든 외부 링크에 클릭 이벤트 추가
   document.addEventListener('click', (event) => {
     const target = event.target
-    
+
     // a 태그이고 href가 http로 시작하는 경우
-    if (target.tagName === 'A' && target.href && target.href.startsWith('http')) {
+    if (
+      target.tagName === 'A' &&
+      target.href &&
+      target.href.startsWith('http')
+    ) {
       event.preventDefault()
-      
+
       // Electron의 shell.openExternal을 통해 기본 브라우저로 열기
       if (window.electronAPI && window.electronAPI.openExternal) {
         window.electronAPI.openExternal(target.href)

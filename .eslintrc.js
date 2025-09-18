@@ -11,7 +11,7 @@ module.exports = {
     sourceType: 'module',
     project: './tsconfig.json',
   },
-  plugins: ['@typescript-eslint', 'prettier'],
+  plugins: ['@typescript-eslint', 'prettier', 'unused-imports'],
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
@@ -64,7 +64,7 @@ module.exports = {
       },
     ],
     'no-unused-vars': 'warn', // TypeScript 버전 사용
-    '@typescript-eslint/no-unused-imports': 'warn',
+    'unused-imports/no-unused-imports': 'warn',
     '@typescript-eslint/consistent-type-assertions': 'off',
     '@typescript-eslint/naming-convention': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',

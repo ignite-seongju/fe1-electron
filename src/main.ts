@@ -2,21 +2,23 @@ import * as dotenv from 'dotenv'
 import { BrowserWindow, app, ipcMain, shell } from 'electron'
 import * as path from 'path'
 
-// 최신 Electron v38용 최적화된 안정화 플래그
-app.commandLine.appendSwitch('--no-sandbox')
-app.commandLine.appendSwitch('--disable-web-security')
-app.commandLine.appendSwitch('--disable-dev-shm-usage')
-app.commandLine.appendSwitch('--js-flags', '--max-old-space-size=4096')
+// 기본 설정으로 시작
 
 // 환경변수 로드
 dotenv.config()
 
 // Hot reload를 위한 설정 (개발 환경에서만)
 if (process.env.NODE_ENV === 'development') {
-  require('electron-reload')(__dirname, {
-    electron: path.join(__dirname, '..', 'node_modules', '.bin', 'electron'),
-    hardResetMethod: 'exit',
-  })
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const electronReload = require('electron-reload')
+    electronReload(__dirname, {
+      electron: path.join(__dirname, '..', 'node_modules', '.bin', 'electron'),
+      hardResetMethod: 'exit',
+    })
+  } catch (error) {
+    console.log('electron-reload not available:', error)
+  }
 }
 
 class ElectronApp {
@@ -59,12 +61,8 @@ class ElectronApp {
         contextIsolation: true,
         preload: path.join(__dirname, 'preload.js'),
         sandbox: false,
-        webSecurity: false,
-        allowRunningInsecureContent: true,
-        spellcheck: false,
       },
-      titleBarStyle: 'default',
-      show: false, // 준비되면 보이도록 설정
+      show: false,
     })
 
     // HTML 파일 로드
@@ -87,6 +85,25 @@ class ElectronApp {
         this.mainWindow?.webContents.openDevTools()
       }
     })
+
+    // 프로덕션 환경에서 DevTools 접근 완전 차단
+    if (process.env.NODE_ENV !== 'development') {
+      this.mainWindow.webContents.on('before-input-event', (event, input) => {
+        // F12, Cmd+Opt+I, Ctrl+Shift+I 차단
+        if (
+          input.key === 'F12' ||
+          (input.key === 'I' && input.meta && input.alt) ||
+          (input.key === 'I' && input.control && input.shift)
+        ) {
+          event.preventDefault()
+        }
+      })
+
+      // 컨텍스트 메뉴 비활성화 (우클릭 검사 차단)
+      this.mainWindow.webContents.on('context-menu', (event) => {
+        event.preventDefault()
+      })
+    }
 
     this.mainWindow.on('closed', () => {
       this.mainWindow = null
