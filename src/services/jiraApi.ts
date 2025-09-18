@@ -211,7 +211,15 @@ class JiraApiClient {
       }>
     }[]
   > {
-    const results = []
+    const results: Array<{
+      fehgKey: string
+      fehgSummary: string
+      linkedKqIssues: Array<{
+        key: string
+        summary: string
+        status: string
+      }>
+    }> = []
 
     for (const fehgIssue of fehgIssues) {
       try {
@@ -226,7 +234,11 @@ class JiraApiClient {
 
         if (linkedTargetIssues.length > 0) {
           // 연결된 대상 프로젝트 이슈들의 상세 정보 조회
-          const targetIssueDetails = []
+          const targetIssueDetails: Array<{
+            key: string
+            summary: string
+            status: string
+          }> = []
           for (const targetKey of linkedTargetIssues) {
             try {
               const targetIssue =
@@ -368,7 +380,7 @@ class JiraApiClient {
 
             if (matchingSprint) {
               // 스프린트 업데이트 시 ID를 사용
-              fields.customfield_10020 = [matchingSprint.id]
+              fields.customfield_10020 = matchingSprint.id
               console.log(
                 `✅ 스프린트 매핑 성공: ${sourceSprintName} → ${matchingSprint.name} (ID: ${matchingSprint.id})`
               )
@@ -839,7 +851,7 @@ class JiraApiClient {
       }
 
       const url = `https://ignitecorp.atlassian.net/rest/api/3/issue/${fehgTicketKey}`
-      await axios.put(url, updatePayload, { auth })
+      await axios.put(url, updatePayload, { auth, httpsAgent })
 
       console.log(`✅ FEHG 티켓 ${fehgTicketKey}에 AUTOWAY 링크 추가 성공`)
       return true
