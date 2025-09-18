@@ -104,4 +104,5 @@ temp/
 app/dist/
 app/release/
 
-*/constants-ignore.ts
+env.ts
+

@@ -1,7 +1,7 @@
+import { IGNORE_API_TOKENS } from '../../env'
 import { JiraBoardIds } from '../types/jira'
 // Jira 기본 설정
 import type { SyncType } from '../types/jira'
-import { IGNORE_API_TOKENS } from './constants-ignore'
 
 export const JIRA_BASE_URL = 'https://ignitecorp.atlassian.net'
 
